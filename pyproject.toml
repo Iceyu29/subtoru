@@ -1,0 +1,67 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "subtoru"
+version = "1.0.0"
+description = "Subtoru — Subtitle generation & translation CLI."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "Subtoru contributors" }]
+keywords = ["subtitles", "transcription", "translation", "whisperx", "gemini"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+    "Topic :: Text Processing :: Linguistic",
+]
+dependencies = [
+    "typer[all]>=0.9",
+    "rich>=13.0",
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+    "python-dotenv>=1.0",
+    "pysubs2>=1.7",
+    "yt-dlp>=2024.0",
+    "gemini-srt-translator>=0.5",
+    "whisperx>=3.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-mock>=3.10",
+    "ruff>=0.4",
+    "black>=24.0",
+]
+
+[project.scripts]
+subtoru = "subtoru.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["subtoru"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: marks tests that need network/GPU/API keys (deselect with '-m \"not integration\"')",
+]
